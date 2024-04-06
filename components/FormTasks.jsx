@@ -15,12 +15,12 @@ const apiRequest = () => {
 
 	request.addEventListener('readystatechange', () => {
 		if (request.readyState === 4) {
-			alert(request);
+			alert(request.response);
 			console.log(request);
 		} 
 	})
 
-	request.open('GET', 'https://jsonplaceholder.typecode.com/todos');
+	request.open('GET', 'http://192.168.1.11:4000/api/clientes/1');
 	request.send();
 }
 
