@@ -1,8 +1,8 @@
 import { Checkbox } from 'react-native-paper'
 import { useState } from 'react';
 
-export default function CheckBoxItem( { id } ) {
-	const [checked, setChecked] = useState(null);
+export default function CheckBoxItem( { id, complecion } ) {
+	const [checked, setChecked] = useState(complecion ? 'checked' : null);
 
 	return (
 		<Checkbox

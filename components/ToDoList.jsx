@@ -1,35 +1,59 @@
+import { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, Button } from 'react-native';
 import todos from '../data/tododb';
 import EditMenu from './EditMenu';
 import CheckBoxItem from './CheckBoxItem';
 
+
 export default function ToDoList({ navigation }) {
+	const [tasks, setTasks] = useState([]);
+
+	const param = {
+		method: 'GET',
+		mode: 'cors',
+		cache: 'no-cache',
+		headers: {
+			'Access-Control-Allow-Origin': '*'
+		}
+	}
+
+	const fetchTasks = async () => {
+		const response = await fetch('http://192.168.1.11:4000/api/clientes', param);
+		const json = await response.json();
+		setTasks(json);
+	}
+
+	useEffect(() => {
+		fetchTasks();
+	}, [])
+
 	return (
 		<View style={styles.container}>
 			<FlatList
-				data={todos}
+				data={tasks.body}
 				ItemSeparatorComponent={() => <View style={styles.separator} />}i
 				renderItem= {({item: tarea}) => (
-					<View key={tarea.id} style={[
+					<View key={tarea.idTask} style={[
 						styles.taskContainer,
 						styles.lowPriority,
-						tarea.nPrioridad === 2 && styles.mediumPriority,
-						tarea.nPrioridad === 3 && styles.highPriority
+						tarea.idPrioridad === 2 && styles.mediumPriority,
+						tarea.idPrioridad === 3 && styles.highPriority
 						]}>
 						<View style={styles.checkBox}>
-							<CheckBoxItem id={tarea.id}/>
+							<CheckBoxItem id={tarea.id} complecion={tarea.complecion}/>
 						</View>
 						<View style={styles.contenedorTexto}>
-							<Text style={styles.texto}>{tarea.texto}</Text>
+							<Text style={styles.texto}>{tarea.titulo}</Text>
 							<Text style={styles.texto}>Fecha: {tarea.fecha}</Text>
+							<Text style={styles.texto}>complecion: {tarea.complecion}</Text>
 						</View>
 						<View style={styles.editar}>
 							<EditMenu navigation={navigation}/>
 						</View>
 					</View>
 			)}
-				keyExtractor={(item) => item.id}
-			/>
+				keyExtractor={(item) => item.idTask}
+				/>
 		</View>
 	)
 }
