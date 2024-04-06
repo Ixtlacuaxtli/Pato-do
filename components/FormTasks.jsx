@@ -10,11 +10,24 @@ const Campos = {
 
 const Prioridades = ["Baja", "Media", "Alta"];
 
+const apiRequest = () => {
+	const request = new XMLHttpRequest();
+
+	request.addEventListener('readystatechange', () => {
+		if (request.readyState === 4) {
+			alert(request);
+			console.log(request);
+		} 
+	})
+
+	request.open('GET', 'https://jsonplaceholder.typecode.com/todos');
+	request.send();
+}
+
 export const FormTasks = props => (
 	<Formik
 		initialValues={Campos}
-		onSubmit={values => alert("Tarea: " + values.texto
-		+ "\nPrioridad: " + values.nPrioridad)}
+		onSubmit={() => apiRequest()}
 	>
 	{({ handleChange, handleBlur, handleSubmit, values }) => (
 		<View>
