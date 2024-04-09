@@ -1,21 +1,21 @@
-import { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, Button } from 'react-native';
-import todos from '../data/tododb';
-import EditMenu from './EditMenu';
-import CheckBoxItem from './CheckBoxItem';
+	import { useState, useEffect } from 'react';
+	import { View, Text, StyleSheet, FlatList, Button } from 'react-native';
+	import todos from '../data/tododb';
+	import EditMenu from './EditMenu';
+	import CheckBoxItem from './CheckBoxItem';
 
 
-export default function ToDoList({ navigation }) {
-	const [tasks, setTasks] = useState([]);
+	export default function ToDoList({ navigation }) {
+		const [tasks, setTasks] = useState([]);
 
-	const param = {
-		method: 'GET',
-		mode: 'cors',
-		cache: 'no-cache',
-		headers: {
-			'Access-Control-Allow-Origin': '*'
+		const param = {
+			method: 'GET',
+			mode: 'cors',
+			cache: 'no-cache',
+			headers: {
+				'Access-Control-Allow-Origin': '*'
+			}
 		}
-	}
 
 	const fetchTasks = async () => {
 		const response = await fetch('http://192.168.1.11:4000/api/clientes', param);

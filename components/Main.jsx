@@ -14,7 +14,7 @@ export default function Main({ navigation }) {
 			/>
 			<Button
 				title="Aniadir"
-				onPress={() => navigation.navigate("Form")}
+				onPress={() => alert('Hola')/*navigation.navigate("About")*/}
 			/>
 			<ToDoList navigation={navigation}/>
 			<StatusBar style="auto"/>
