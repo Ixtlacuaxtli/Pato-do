@@ -1,7 +1,28 @@
 import { useState } from 'react';
 import { FormCRUD } from './FormCRUD';
+import { View, Text } from 'react-native';
+import { Formik } from 'formik';
 
-const apiRequest = () => {
+const apiRequest = (e) => {
+	let idPrioridad;
+	const nPrioridad = e.nPrioridad
+
+	if(nPrioridad == 'Alta') {
+		idPrioridad = 3
+	} 
+	else if (nPrioridad == 'Media') {
+		idPrioridad = 2
+	}
+	else {
+		idPrioridad = 1
+	}
+
+	const jsonRequest = {
+		"complecion": 0,
+		"titulo": e.texto,
+		"idPrioridad": idPrioridad,
+		"fecha": e.fecha,
+	}
 	const request = new XMLHttpRequest();
 
 	request.addEventListener('readystatechange', () => {
@@ -11,8 +32,11 @@ const apiRequest = () => {
 		} 
 	})
 
-	request.open('GET', 'http://192.168.1.11:4000/api/clientes/1');
-	request.send();
+	request.open('PUT', 'http://192.168.1.11:4000/api/clientes/');
+	request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
+	request.send(JSON.stringify(jsonRequest));
+	
+	//console.log(JSON.stringify(jsonRequest));
 }
 
 const apiFetch = () => {
@@ -26,12 +50,30 @@ const apiFetch = () => {
 
 	fetchTasks()
 
-	alert(tasks)
+	console.log(json)
 }
 
-export default function FormTasks (...props) {
+const Campos = {
+	texto: '',
+	nPrioridad: '',
+	fecha: ''
+}
+
+export const FormTasks = () => {
 	return (
-		<FormCRUD onSubmitFunction={apiFetch()} {...props} />
+		<View>
+			<Formik
+				initialValues={Campos}
+				onSubmit={(e) => {
+					apiRequest(e);
+				}}
+			>
+			{(props) => (
+				{/*<FormCRUD />*/},
+				<FormCRUD {...props} />
+			)}
+			</Formik>
+		</View>
 	)
-};
+}
 

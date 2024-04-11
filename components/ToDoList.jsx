@@ -4,7 +4,6 @@
 	import EditMenu from './EditMenu';
 	import CheckBoxItem from './CheckBoxItem';
 
-
 	export default function ToDoList({ navigation }) {
 		const [tasks, setTasks] = useState([]);
 

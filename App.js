@@ -34,12 +34,11 @@ export default function App() {
         <Stack.Screen
           name='About'i
           component={AboutScreen}
-        />{/*
+        />
         <Stack.Screen
           name='Form'
           component={FormTasks}
         />
-        */}
           <Stack.Screen
           name='Edit'
           component={EditScreen}
